@@ -6,4 +6,8 @@ package com.any.zhangjunjie.entity;
  * 与订单实体类关联，一个订单可能包含多个支付信息
  */
 public class Payment {
+    private int paymentId;
+    private int method;
+    private int status;
+    private Long money;
 }

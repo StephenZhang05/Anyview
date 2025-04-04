@@ -5,4 +5,9 @@ package com.any.zhangjunjie.entity;
  * 管理员实体类
  */
 public class Admin {
+    private Integer id;
+    private String username;
+    private String password;
+    private Integer phone;
+
 }

@@ -5,4 +5,7 @@ package com.any.zhangjunjie.entity;
  * 电影实体类
  */
 public class Movie {
+    private int movieId;
+    private String time;
+    private int price;
 }
