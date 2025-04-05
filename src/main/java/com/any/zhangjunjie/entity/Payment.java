@@ -10,4 +10,44 @@ public class Payment {
     private int method;
     private int status;
     private Long money;
+    public Payment() {
+
+    }
+    public Payment(int paymentId, int method, int status, Long money) {
+        this.paymentId = paymentId;
+        this.method = method;
+        this.status = status;
+        this.money = money;
+    }
+    public Long getMoney() {
+        return money;
+    }
+
+    public void setMoney(Long money) {
+        this.money = money;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getMethod() {
+        return method;
+    }
+
+    public void setMethod(int method) {
+        this.method = method;
+    }
+
+    public int getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(int paymentId) {
+        this.paymentId = paymentId;
+    }
 }
