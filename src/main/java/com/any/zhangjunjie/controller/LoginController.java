@@ -8,6 +8,6 @@ import jakarta.servlet.annotation.WebServlet;
  * 用于处理登录相关的请求，如用户登录、管理员登录等
  */
 @WebServlet("/login/*")
-public class LoginController {
+public class LoginController extends BaseController{
 
 }

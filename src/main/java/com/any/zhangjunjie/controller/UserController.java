@@ -7,6 +7,6 @@ import jakarta.servlet.annotation.WebServlet;
  * 用户控制器类
  */
 @WebServlet("/user/*")
-public class UserController {
+public class UserController extends BaseController{
 
 }

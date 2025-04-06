@@ -7,5 +7,5 @@ import jakarta.servlet.annotation.WebServlet;
  * 订单控制器类
  */
 @WebServlet("/order/*")
-public class OrderController {
+public class OrderController extends BaseController{
 }
