@@ -48,7 +48,7 @@ public class UserDaoimpl implements UserDao {
             pstmt.setString(1, username);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    user.setUserId(rs.getInt("id"));
+                    user.setUserId(rs.getInt("userId"));
                     user.setUsername(rs.getString("username"));
                     user.setPassword(rs.getString("password")); // 存储的是 BCrypt 加密后的值
                     user.setType(rs.getString("type"));

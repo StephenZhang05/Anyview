@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
 @WebServlet("/user/*")
 public class UserController extends HttpServlet {
     /**
-     * 需要实现的功能有：修改用户密码，登陆，注册，登出账户，查看历史订单
+     * 需要实现的功能有：修改用户密码，登陆，注册，登出账户
      *
      */
     private UserServiceimpl userService=new UserServiceimpl();
@@ -75,6 +75,6 @@ public class UserController extends HttpServlet {
     }
     protected Result logout(HttpServletRequest req, HttpServletResponse rep) throws IOException {
         //登出用户
-        return Result.ok();
+        return userService.logout(req,rep);
     }
 }

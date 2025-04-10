@@ -1,11 +1,14 @@
 package com.any.zhangjunjie.entity;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import java.util.List;
 
 /**
  * @author zhangjunjie
  * 结果泛型
  */
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Result {
     private Boolean success;
     private String errorMsg;

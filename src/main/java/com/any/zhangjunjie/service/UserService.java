@@ -12,4 +12,6 @@ public interface UserService {
     void register(HttpServletRequest req, HttpServletResponse rep) throws IOException;
 
     Result login(HttpServletRequest req, HttpServletResponse rep);
+
+    Result logout(HttpServletRequest req, HttpServletResponse rep);
 }

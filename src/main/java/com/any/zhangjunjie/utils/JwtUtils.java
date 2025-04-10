@@ -1,14 +1,21 @@
 package com.any.zhangjunjie.utils;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import java.util.Date;
 
 public class JwtUtils {
-    private static final String SECRET_KEY = "yourSecretKey";
+    private static final String SECRET_KEY = "Zhangjunjie";
     private static final long EXPIRATION_TIME = 864_000_000; // 10 days
-
+    public static Claims parseToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(SECRET_KEY.getBytes())  // 与生成时保持一致
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
     public static String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
