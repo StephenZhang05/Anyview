@@ -21,9 +21,10 @@ public class UserDaoimpl implements UserDao {
     @Override
     public boolean saveUser(User user) {
         String sql = "INSERT INTO user(username, password, type)  VALUES (?,?,?)";
-
-        try (Connection conn = JdbcUtils.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        Connection conn = null;
+        try  {
+            conn= JdbcUtils.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             String passwordX = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, passwordX);
@@ -33,6 +34,8 @@ public class UserDaoimpl implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }finally {
+            JdbcUtils.close(conn);
         }
 
     }
