@@ -12,4 +12,6 @@ public interface OrderDao {
     void createOrder(Order newOrder);
 
     List<Order> history(int userId);
+
+    Movie getMovieById(int movieId);
 }

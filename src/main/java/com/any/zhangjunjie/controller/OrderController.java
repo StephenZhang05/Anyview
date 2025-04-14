@@ -1,5 +1,6 @@
 package com.any.zhangjunjie.controller;
 
+import com.any.zhangjunjie.entity.Movie;
 import com.any.zhangjunjie.entity.Order;
 import com.any.zhangjunjie.entity.Result;
 import com.any.zhangjunjie.service.OrderService;
@@ -42,5 +43,15 @@ public class OrderController extends BaseController{
      */
     protected List<Order> history(HttpServletRequest req, HttpServletResponse resp)throws IOException{
         return orderService.history(req, resp);
+    }
+
+    /**
+     * 查看电影详情
+     * @param req
+     * @param resp
+     * @throws IOException
+     */
+    protected Movie detail(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        return orderService.detail(req, resp);
     }
 }

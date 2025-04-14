@@ -37,6 +37,7 @@ public class OrderServiceimpl implements OrderService {
         newOrder.setPaymentId(RandomUtil.randomInt());
         LocalDateTime now=LocalDateTime.now();
         newOrder.setCreateTime(now.toString());
+        newOrder.setStatus(0);
         orderDao.createOrder(newOrder);
     }
 
@@ -47,6 +48,20 @@ public class OrderServiceimpl implements OrderService {
 
 
         return null;
+    }
+
+    /**
+     *
+     * 传入电影Id获取详情
+     * @param
+     * @param resp
+     * @return
+     */
+    @Override
+    public Movie detail(HttpServletRequest req, HttpServletResponse resp) {
+        int movieId= Integer.parseInt(req.getParameter("movieId"));
+        Movie movie =orderDao.getMovieById(movieId);
+        return movie;
     }
 
 }

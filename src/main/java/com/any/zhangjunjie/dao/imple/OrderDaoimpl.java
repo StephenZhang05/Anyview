@@ -17,6 +17,7 @@ public class OrderDaoimpl implements OrderDao {
     @Override
     public Movie getOrderById(int movieId) {
         String sql="select * from movie where movieId=?";
+        Movie movie=new Movie();
         Connection conn=null;
         try {
             conn= JdbcUtils.getConnection();
@@ -24,7 +25,6 @@ public class OrderDaoimpl implements OrderDao {
             pstmt.setInt(1,movieId);
             try(ResultSet rs=pstmt.executeQuery()){
                 if(rs.next()){
-                    Movie movie=new Movie();
                     movie.setMovieId(rs.getInt("movieId"));
                     movie.setTime(rs.getString("time"));
                     movie.setPrice(rs.getInt("price"));
@@ -36,7 +36,7 @@ public class OrderDaoimpl implements OrderDao {
         }finally{
             JdbcUtils.close(conn);
         }
-        return null;
+        return movie;
     }
 
     @Override
@@ -93,5 +93,34 @@ public class OrderDaoimpl implements OrderDao {
             JdbcUtils.close(conn);
         }
         return list;
+    }
+
+    /**
+     * 通过movieId获取电影信息
+     * @param movieId
+     * @return
+     */
+    @Override
+    public Movie getMovieById(int movieId) {
+        String sql="select * from movie where movieId=?";
+        Connection connection=null;
+        Movie movie=new Movie();
+        try{
+            connection=JdbcUtils.getConnection();
+            PreparedStatement pstmt=connection.prepareStatement(sql);
+            pstmt.setInt(1,movieId);
+            try(ResultSet rs=pstmt.executeQuery()){
+                if(rs.next()){
+                    movie.setMovieId(rs.getInt("movieId"));
+                    movie.setTime(rs.getString("time"));
+                    movie.setPrice(rs.getInt("price"));
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            JdbcUtils.close(connection);
+        }
+        return movie;
     }
 }
