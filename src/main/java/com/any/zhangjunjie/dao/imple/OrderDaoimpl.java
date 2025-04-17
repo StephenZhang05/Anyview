@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class OrderDaoimpl implements OrderDao {
 
     @Override
     public void createOrder(Order newOrder) {
-        String sql="insert into order(movieId,userId,price,paymentId,status,createTime) values(?,?,?,?,?,?)";
+        String sql="insert into 'order'(movieId,userId,price,paymentId,status,createTime) values(?,?,?,?,?,?)";
         Connection conn=null;
         try {
             conn= JdbcUtils.getConnection();
@@ -114,6 +115,7 @@ public class OrderDaoimpl implements OrderDao {
                     movie.setMovieId(rs.getInt("movieId"));
                     movie.setTime(rs.getString("time"));
                     movie.setPrice(rs.getInt("price"));
+                    movie.setDetail(rs.getString("detail"));
                 }
             }
         }catch (SQLException e){
@@ -122,5 +124,40 @@ public class OrderDaoimpl implements OrderDao {
             JdbcUtils.close(connection);
         }
         return movie;
+    }
+
+    /**
+     *
+     * 查找最近三天内的订单
+     * @param now
+     * @return
+     */
+    @Override
+    public List<Order> orders(LocalDateTime now) {
+        String sql="select * from 'order' where createTime>? and createTime<?";
+        Connection connection=null;
+        List<Order>list=new ArrayList<>();
+        try{
+            connection=JdbcUtils.getConnection();
+            PreparedStatement pstmt=connection.prepareStatement(sql);
+            pstmt.setString(1,now.minusDays(3).toString());
+            pstmt.setString(2,now.toString());
+            try(ResultSet rs=pstmt.executeQuery()){
+                while(rs.next()){
+                    Order order=new Order();
+                    order.setOrderId(rs.getInt("orderId"));
+                    order.setMovieId(rs.getInt("movieId"));
+                    order.setUserId(rs.getInt("userId"));
+                    order.setPrice(rs.getInt("price"));
+                    order.setPaymentId(rs.getInt("paymentId"));
+                    order.setStatus(rs.getInt("status"));
+                    order.setCreateTime(rs.getString("createTime"));
+                    list.add(order);
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return list;
     }
 }

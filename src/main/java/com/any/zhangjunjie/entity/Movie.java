@@ -10,7 +10,6 @@ public class Movie {
     private int price;
     private String detail;
     public Movie() {
-
     }
 
     public String getDetail() {
