@@ -11,27 +11,31 @@ import java.util.List;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Result {
     private Boolean success;
-    private String errorMsg;
+    private String message;
     private Object data;
     private Long total;
 
-    public Result(Boolean success, String errorMsg, Object data, Long total) {
+    private Result(Boolean success, String message, Long total) {
         this.success = success;
-        this.errorMsg = errorMsg;
-        this.data = data;
+        this.message = message;
         this.total = total;
     }
 
-    public static Result ok(){
-        return new Result(true, null, null, null);
+    // 成功方法组
+    public static Result ok() {
+        return new Result(true, "操作成功", null);
     }
-    public static Result ok(Object data){
-        return new Result(true, null, data, null);
+
+    public static Result ok(String message) {
+        return new Result(true, message, null);
     }
-    public static Result ok(List<?> data, Long total){
-        return new Result(true, null, data, total);
+
+    public static Result ok(String message, Long total) {
+        return new Result(true, message, total);
     }
-    public static Result fail(String errorMsg){
-        return new Result(false, errorMsg, null, null);
+
+    // 失败方法
+    public static Result fail(String message) {
+        return new Result(false, message, null);
     }
 }
