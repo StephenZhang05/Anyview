@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * @author zhangjunjie
@@ -20,7 +21,12 @@ public class BaseController extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo(); // 获取如 "/login" 的路径
-        String methodName = parseMethodName(pathInfo);
+        String methodName =null;
+        if(pathInfo==null||pathInfo.equals("/")){
+            methodName="index";
+        }else{
+            methodName=pathInfo.replace("/","");
+        }
 
         try {
             // 通过反射获取方法
@@ -30,7 +36,8 @@ public class BaseController extends HttpServlet {
             // 处理返回类型差异
             method.setAccessible(true);
             Object result = method.invoke(this, req, resp);
-            if (result instanceof Result) {
+            if (result instanceof Result||result instanceof List<?>) {
+                resp.setContentType("application/json;charset=utf-8");
                 resp.getWriter().write(new ObjectMapper().writeValueAsString(result));
             }
         } catch (NoSuchMethodException e) {
@@ -39,13 +46,4 @@ public class BaseController extends HttpServlet {
             throw new ServletException("路由执行错误", e);
         }
     }
-
-    // 路径解析逻辑
-    private String parseMethodName(String pathInfo) {
-        if (pathInfo == null || pathInfo.equals("/")) {
-            return "index"; // 默认入口
-        }
-        return pathInfo.replace("/", ""); // 将 "/login" 转为 "login"
-    }
-
 }

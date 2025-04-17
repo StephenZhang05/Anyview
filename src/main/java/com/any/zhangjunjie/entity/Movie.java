@@ -8,13 +8,24 @@ public class Movie {
     private int movieId;
     private String time;
     private int price;
+    private String detail;
     public Movie() {
 
     }
-    public Movie(int movieId, String time, int price) {
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public Movie(int movieId, String time, int price,String detail) {
         this.movieId = movieId;
         this.time = time;
         this.price = price;
+        this.detail=detail;
     }
     public int getPrice() {
         return price;

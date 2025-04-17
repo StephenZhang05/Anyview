@@ -45,9 +45,7 @@ public class OrderServiceimpl implements OrderService {
     public List<Order> history(HttpServletRequest req, HttpServletResponse resp) {
         int userId= Integer.parseInt(req.getParameter("userId"));
         List<Order> orders=orderDao.history(userId);
-
-
-        return null;
+        return orders;
     }
 
     /**

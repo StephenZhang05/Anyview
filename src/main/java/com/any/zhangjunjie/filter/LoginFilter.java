@@ -12,7 +12,7 @@ import redis.clients.jedis.Jedis;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/order","/pay","/admin"},filterName = "loginFilter")
+@WebFilter(urlPatterns = {"/order","/pay","/admin",},filterName = "loginFilter")
 public class LoginFilter implements Filter {
     private static final String SECRET_KEY = "ZhangJunJie";
 
@@ -37,11 +37,11 @@ public class LoginFilter implements Filter {
                     jedis.expire(redisKey, TOKEN_TTL);
                     chain.doFilter(request, response);
                 } else {
-                    resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token expired");
+                    resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "token过期或没有token");
                 }
             } catch (Exception e) {
                 if (e instanceof ServletException) {
-                    resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token");
+                    resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "无token");
                 } else {
                     resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Redis error");
                 }

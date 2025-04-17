@@ -15,7 +15,11 @@ public class Result {
     private Object data;
     private Long total;
 
-    public Result(boolean b, Object o, Object o1, Object o2) {
+    public Result(Boolean success, String errorMsg, Object data, Long total) {
+        this.success = success;
+        this.errorMsg = errorMsg;
+        this.data = data;
+        this.total = total;
     }
 
     public static Result ok(){
