@@ -15,8 +15,21 @@ public class UserDaoimpl implements UserDao {
 
     @Override
     public void changePassword(int userId, String newPassword) {
-
+         String sql = "UPDATE user SET password = ? WHERE userId = ?";
+         Connection conn = null;
+         try  {
+             conn= JdbcUtils.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             pstmt.setString(1, newPassword);
+             pstmt.setInt(2, userId);
+             pstmt.executeUpdate();
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }finally {
+             JdbcUtils.close(conn);
+         }
     }
+
 
     @Override
     public boolean saveUser(User user) {

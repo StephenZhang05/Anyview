@@ -33,6 +33,13 @@ public class AdminController extends BaseController{
 
         return adminService.change(request,response);
     }
+
+    /**
+     * 查看三天内的所有订单
+     * @param request
+     * @param response
+     * @return List<Order>
+     */
     protected List<Order>orders(HttpServletRequest request,HttpServletResponse response){
         return adminService.orders(request,response);
     }

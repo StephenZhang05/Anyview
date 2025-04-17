@@ -12,12 +12,13 @@ public class AdminDaoimpl implements AdminDao {
     @Override
     public boolean change(Movie movie) {
         Connection conn=null;
-        String sql="update movie set time=?,price=?,detail=? where movieId=?";
+        String sql="update movie set beginTime=?,endTime=?,price=?, detail=? where movieId=?";
         int movieId=movie.getMovieId();
         try{
             conn= JdbcUtils.getConnection();
             PreparedStatement pstmt=conn.prepareStatement(sql);
-            pstmt.setString(1,movie.getTime());
+            pstmt.setString(1,movie.getBeginTime());
+            pstmt.setString(2,movie.getEndTime());
             pstmt.setInt(2,movie.getPrice());
             pstmt.setString(3,movie.getDetail());
             pstmt.executeQuery();

@@ -6,7 +6,8 @@ package com.any.zhangjunjie.entity;
  */
 public class Movie {
     private int movieId;
-    private String time;
+    private String beginTime;
+    private String endTime;
     private int price;
     private String detail;
     public Movie() {
@@ -20,9 +21,10 @@ public class Movie {
         this.detail = detail;
     }
 
-    public Movie(int movieId, String time, int price,String detail) {
+    public Movie(int movieId, String beginTime,String endTime, int price,String detail) {
         this.movieId = movieId;
-        this.time = time;
+        this.beginTime=beginTime;
+        this.endTime=endTime;
         this.price = price;
         this.detail=detail;
     }
@@ -34,14 +36,20 @@ public class Movie {
         this.price = price;
     }
 
-    public String getTime() {
-        return time;
+    public String getBeginTime() {
+        return beginTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setBeginTime(String time) {
+        this.beginTime = time;
     }
 
+    public String getEndTime() {
+        return endTime;
+    }
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
     public int getMovieId() {
         return movieId;
     }

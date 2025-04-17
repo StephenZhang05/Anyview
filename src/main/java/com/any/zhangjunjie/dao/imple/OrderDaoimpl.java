@@ -27,7 +27,8 @@ public class OrderDaoimpl implements OrderDao {
             try(ResultSet rs=pstmt.executeQuery()){
                 if(rs.next()){
                     movie.setMovieId(rs.getInt("movieId"));
-                    movie.setTime(rs.getString("time"));
+                    movie.setBeginTime(rs.getString("time"));
+                    movie.setEndTime(rs.getString("endTime"));
                     movie.setPrice(rs.getInt("price"));
                     return movie;
                 }
@@ -113,7 +114,8 @@ public class OrderDaoimpl implements OrderDao {
             try(ResultSet rs=pstmt.executeQuery()){
                 if(rs.next()){
                     movie.setMovieId(rs.getInt("movieId"));
-                    movie.setTime(rs.getString("time"));
+                    movie.setBeginTime(rs.getString("time"));
+                    movie.setEndTime(rs.getString("endTime"));
                     movie.setPrice(rs.getInt("price"));
                     movie.setDetail(rs.getString("detail"));
                 }
