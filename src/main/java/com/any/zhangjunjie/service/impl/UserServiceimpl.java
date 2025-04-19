@@ -11,8 +11,6 @@ import com.any.zhangjunjie.entity.Result;
 import com.any.zhangjunjie.entity.User;
 import com.any.zhangjunjie.service.UserService;
 import com.any.zhangjunjie.utils.JwtUtils;
-import com.any.zhangjunjie.utils.RedisUtil;
-import io.jsonwebtoken.Jwt;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import redis.clients.jedis.Jedis;

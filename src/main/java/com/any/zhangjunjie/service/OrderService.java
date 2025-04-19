@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface OrderService {
-    void createOrder(HttpServletRequest req, HttpServletResponse resp);
+    void createOrder(HttpServletRequest req, HttpServletResponse resp) throws Exception;
 
     List<Order> history(HttpServletRequest req, HttpServletResponse resp);
 

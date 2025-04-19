@@ -14,37 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDaoimpl implements OrderDao {
-
     @Override
-    public Movie getOrderById(int movieId) {
-        String sql="select * from movie where movieId=?";
-        Movie movie=new Movie();
-        Connection conn=null;
-        try {
-            conn= JdbcUtils.getConnection();
-            PreparedStatement pstmt=conn.prepareStatement(sql);
-            pstmt.setInt(1,movieId);
-            try(ResultSet rs=pstmt.executeQuery()){
-                if(rs.next()){
-                    movie.setMovieId(rs.getInt("movieId"));
-                    movie.setBeginTime(rs.getString("time"));
-                    movie.setEndTime(rs.getString("endTime"));
-                    movie.setPrice(rs.getInt("price"));
-                    return movie;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally{
-            JdbcUtils.close(conn);
-        }
-        return movie;
-    }
-
-    @Override
-    public void createOrder(Order newOrder) {
+    public void createOrder(Connection conn, Order newOrder) {
         String sql="insert into 'order'(movieId,userId,price,paymentId,status,createTime) values(?,?,?,?,?,?)";
-        Connection conn=null;
         try {
             conn= JdbcUtils.getConnection();
             PreparedStatement pstmt=conn.prepareStatement(sql);
@@ -57,8 +29,6 @@ public class OrderDaoimpl implements OrderDao {
             pstmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
-        }finally {
-            JdbcUtils.close(conn);
         }
     }
 
@@ -99,12 +69,13 @@ public class OrderDaoimpl implements OrderDao {
 
     /**
      * 通过movieId获取电影信息
+     *
      * @param movieId
      * @return
      */
     @Override
     public Movie getMovieById(int movieId) {
-        String sql="select * from movie where movieId=?";
+        String sql="select * from movie where movieId=?  ";
         Connection connection=null;
         Movie movie=new Movie();
         try{
@@ -161,5 +132,34 @@ public class OrderDaoimpl implements OrderDao {
             e.printStackTrace();
         }
         return list;
+    }
+
+    /**
+     * 悲观锁模拟高并发
+     * @param conn
+     * @param movieId
+     * @return
+     */
+    @Override
+    public Movie getMovieByIdForUpdate(Connection conn, int movieId) {
+        String sql="select * from movie where movieId=? for update ";
+        Movie movie=new Movie();
+        try{
+            conn=JdbcUtils.getConnection();
+            PreparedStatement pstmt=conn.prepareStatement(sql);
+            pstmt.setInt(1,movieId);
+            try(ResultSet rs=pstmt.executeQuery()){
+                if(rs.next()){
+                    movie.setMovieId(rs.getInt("movieId"));
+                    movie.setBeginTime(rs.getString("time"));
+                    movie.setEndTime(rs.getString("endTime"));
+                    movie.setPrice(rs.getInt("price"));
+                    movie.setDetail(rs.getString("detail"));
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return movie;
     }
 }
