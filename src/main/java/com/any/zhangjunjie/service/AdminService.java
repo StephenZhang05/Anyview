@@ -11,4 +11,6 @@ public interface AdminService {
     Result change(HttpServletRequest request, HttpServletResponse response);
 
     List<Order> orders(HttpServletRequest request, HttpServletResponse response);
+
+    Result black(HttpServletRequest request, HttpServletResponse response);
 }

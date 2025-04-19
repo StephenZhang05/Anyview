@@ -2,6 +2,7 @@ package com.any.zhangjunjie.dao.imple;
 
 import com.any.zhangjunjie.dao.AdminDao;
 import com.any.zhangjunjie.entity.Movie;
+import com.any.zhangjunjie.entity.Result;
 import com.any.zhangjunjie.utils.JdbcUtils;
 
 import java.sql.Connection;
@@ -29,5 +30,24 @@ public class AdminDaoimpl implements AdminDao {
             JdbcUtils.close(conn);
         }
         return true;
+    }
+
+    @Override
+    public Result black(int userId) {
+        String sql="update user set flag=1 where userId=?";
+        Connection conn=null;
+        try{
+            conn= JdbcUtils.getConnection();
+            PreparedStatement pstmt=conn.prepareStatement(sql);
+            pstmt.setInt(1,userId);
+            pstmt.executeQuery();
+            return Result.ok("用户拉黑成功");
+        }catch (SQLException e){
+            e.printStackTrace();
+            return Result.fail("数据库异常");
+        }finally {
+            JdbcUtils.close(conn);
+        }
+
     }
 }

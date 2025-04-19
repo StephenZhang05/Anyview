@@ -41,6 +41,12 @@ public class OrderServiceimpl implements OrderService {
         orderDao.createOrder(newOrder);
     }
 
+    /**
+     * 根据用户id获取历史订单
+     * @param req
+     * @param resp
+     * @return
+     */
     @Override
     public List<Order> history(HttpServletRequest req, HttpServletResponse resp) {
         int userId= Integer.parseInt(req.getParameter("userId"));

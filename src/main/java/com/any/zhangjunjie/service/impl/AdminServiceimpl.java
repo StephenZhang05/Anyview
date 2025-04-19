@@ -56,4 +56,11 @@ public class AdminServiceimpl implements AdminService {
         List<Order>orderList=orderDao.orders(now);
         return orderList;
     }
+
+    @Override
+    public Result black(HttpServletRequest request, HttpServletResponse response) {
+        int userId= Integer.parseInt(request.getParameter("userId"));
+        return adminDao.black(userId);
+    }
+
 }

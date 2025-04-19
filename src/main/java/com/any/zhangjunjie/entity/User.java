@@ -12,9 +12,19 @@ public class User {
     private String password;
     private String type;
     private Long phone;
+    private int flag;
     public User() {
 
     }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
+
     public User(String username, String password, String type){
         this.username = username;
         this.password = password;

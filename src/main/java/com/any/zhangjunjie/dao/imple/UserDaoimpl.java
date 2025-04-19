@@ -10,7 +10,29 @@ import java.sql.*;
 public class UserDaoimpl implements UserDao {
     @Override
     public User getUserById(int userId) {
-        return null;
+        String sql = "SELECT * FROM user WHERE userId = ?";
+        Connection conn = null;
+        User user = new User();
+        try {
+            conn = JdbcUtils.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    user.setUserId(rs.getInt("userId"));
+                    user.setUsername(rs.getString("username"));
+                    user.setPassword(rs.getString("password"));
+                    user.setType(rs.getString("type"));
+                    user.setPhone(rs.getLong("phone"));
+                    user.setFlag(rs.getInt("flag"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            JdbcUtils.close(conn);
+        }
+        return user;
     }
 
     @Override

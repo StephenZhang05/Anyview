@@ -27,7 +27,6 @@ import java.util.List;
 public class UserServiceimpl implements UserService {
     UserDao userDao = new UserDaoimpl();
     OrderDao orderDao = new OrderDaoimpl();
-
     public Result changePassword(HttpServletRequest req, HttpServletResponse rep) throws IOException {
         String username = req.getParameter("username");
         String newPassword = req.getParameter("Password");
@@ -71,8 +70,10 @@ public class UserServiceimpl implements UserService {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         User user = userDao.getUserByUsername(username);
+        if(user.getFlag()==1){
+            return Result.fail("该用户已被屏蔽");
+        }
         String userpassword=user.getPassword();
-        // 自动关闭连接
         if (user != null && BCrypt.checkpw(password, userpassword)) {
             String jwt = JwtUtils.generateToken(username);
 
@@ -99,7 +100,7 @@ public class UserServiceimpl implements UserService {
             try (Jedis jedis = new Jedis("127.0.0.1", 6379)) {
                 Long delResult = jedis.del("jwt:" + username);
                 if (delResult == 1) {
-                    rep.sendRedirect("/login.html");
+//                    rep.sendRedirect("/login.html");
                     return Result.ok("登出成功");
                 }
                 return Result.fail("系统错误");

@@ -43,4 +43,13 @@ public class AdminController extends BaseController{
     protected List<Order>orders(HttpServletRequest request,HttpServletResponse response){
         return adminService.orders(request,response);
     }
+    /**
+     * 拉黑用户
+     * @param request
+     * @param response
+     * @return Result
+     */
+    protected Result black(HttpServletRequest request,HttpServletResponse response){
+        return adminService.black(request,response);
+    }
 }
