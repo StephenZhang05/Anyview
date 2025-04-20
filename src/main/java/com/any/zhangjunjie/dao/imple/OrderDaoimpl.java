@@ -10,13 +10,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDaoimpl implements OrderDao {
     @Override
     public void createOrder(Connection conn, Order newOrder) {
-        String sql="insert into 'order'(movieId,userId,price,paymentId,status,createTime) values(?,?,?,?,?,?)";
+        String sql="insert into `order`(movieId,userId,price,paymentId,status,createTime) values(?,?,?,?,?,?)";
         try {
             conn= JdbcUtils.getConnection();
             PreparedStatement pstmt=conn.prepareStatement(sql);
@@ -25,7 +26,8 @@ public class OrderDaoimpl implements OrderDao {
             pstmt.setInt(3,newOrder.getPrice());
             pstmt.setInt(4,newOrder.getPaymentId());
             pstmt.setInt(5,newOrder.getStatus());
-            pstmt.setString(6,newOrder.getCreateTime());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            pstmt.setString(6, LocalDateTime.now().format(formatter));
             pstmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -151,7 +153,7 @@ public class OrderDaoimpl implements OrderDao {
             try(ResultSet rs=pstmt.executeQuery()){
                 if(rs.next()){
                     movie.setMovieId(rs.getInt("movieId"));
-                    movie.setBeginTime(rs.getString("time"));
+                    movie.setBeginTime(rs.getString("beginTime"));
                     movie.setEndTime(rs.getString("endTime"));
                     movie.setPrice(rs.getInt("price"));
                     movie.setDetail(rs.getString("detail"));

@@ -31,7 +31,7 @@ public class OrderController extends BaseController{
      * @param resp
      * @throws
      */
-    protected void createOrder(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void createOrder(HttpServletRequest req, HttpServletResponse resp) throws Exception {
           orderService.createOrder(req, resp);
     }
 

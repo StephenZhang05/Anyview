@@ -21,7 +21,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 public class UserServiceimpl implements UserService {
     UserDao userDao = new UserDaoimpl();
     OrderDao orderDao = new OrderDaoimpl();
@@ -74,6 +73,7 @@ public class UserServiceimpl implements UserService {
         String userpassword=user.getPassword();
         if (user != null && BCrypt.checkpw(password, userpassword)) {
             String jwt = JwtUtils.generateToken(username);
+            System.out.println(jwt);
 
             rep.addHeader("Authorization", "Bearer " + jwt);
             if (user.getType().equals("yes")) {
@@ -81,7 +81,7 @@ public class UserServiceimpl implements UserService {
                 return Result.ok("管理员登录成功");
             }
 //            rep.sendRedirect("/user.html");
-            return Result.ok("登录成功");
+            return Result.ok("登录成功"+jwt);
         }
         return user==null?Result.fail("用户名不存在"):Result.fail("密码错误");
 }

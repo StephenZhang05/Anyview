@@ -40,7 +40,7 @@ public class OrderServiceimpl implements OrderService {
             newOrder.setMovieId(movieId);
             newOrder.setUserId(Integer.parseInt(req.getParameter("userId")));
             newOrder.setPrice(movie.getPrice());
-            newOrder.setPaymentId(RandomUtil.randomInt());
+            newOrder.setPaymentId(RandomUtil.randomInt(0, 10001));
             newOrder.setCreateTime(LocalDateTime.now().toString());
             newOrder.setStatus(0);
             orderDao.createOrder(conn, newOrder);
@@ -55,6 +55,7 @@ public class OrderServiceimpl implements OrderService {
                 try {
                     conn.setAutoCommit(true);
                     conn.close();
+
                 } catch (SQLException ignored) {}
             }
         }
